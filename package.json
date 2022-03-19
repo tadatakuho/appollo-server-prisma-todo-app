@@ -9,13 +9,25 @@
     "start": "node dist/index.js",
     "format": "prettier --write $PWD/'src/**/*.{js,ts}'",
     "lint": "eslint 'src/**/*.{js,ts}'",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "codegen": "graphql-codegen --config codegen.yml",
+    "migrate": "prisma migrate dev",
+    "db:seed": "ts-node prisma/seed.ts",
+    "prisma:preview": "prisma studio"
   },
   "dependencies": {
+    "@graphql-tools/graphql-file-loader": "^7.3.4",
+    "@graphql-tools/load": "^7.5.2",
+    "@graphql-tools/schema": "^8.3.2",
+    "@prisma/client": "^3.11.0",
     "apollo-server": "^3.1.1",
-    "graphql": "^15.5.1"
+    "graphql": "^15.5.1",
+    "prisma": "^3.11.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^2.6.2",
+    "@graphql-codegen/typescript": "^2.4.7",
+    "@graphql-codegen/typescript-resolvers": "^2.5.4",
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "@typescript-eslint/parser": "^4.28.5",
     "eslint": "^7.32.0",

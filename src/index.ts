@@ -1,4 +1,12 @@
+import { GraphQLFileLoader } from "@graphql-tools/graphql-file-loader";
 import { ApolloServer, gql } from "apollo-server";
+import { addResolversToSchema } from "@graphql-tools/schema";
+import { loadSchemaSync } from "@graphql-tools/load";
+import { join } from "path";
+
+const schema = loadSchemaSync(join(__dirname, "../schema.graphql"), {
+  loaders: [new GraphQLFileLoader()],
+});
 
 const typeDefs = gql`
   # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
@@ -32,7 +40,8 @@ const resolvers = {
   },
 };
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const schemaWithResolvers = addResolversToSchema({ schema, resolvers });
+const server = new ApolloServer({ schema: schemaWithResolvers });
 
 server.listen().then(({ url }) => {
   console.log(`Server ready at ${url}`);
